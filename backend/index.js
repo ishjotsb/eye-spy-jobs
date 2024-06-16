@@ -2,9 +2,20 @@ const express = require('express');
 const port = 8000;
 const app = express();
 
-app.get('/', (req, res) => {
-    res.send('<h1>Hello World</h1>');
-})
+require('dotenv').config();
+
+const connectDB = require('./config/dbConnection');
+
+connectDB();
+
+//Built-in Middlewares -----
+app.use(express.urlencoded({extended: false}));
+app.use(express.json());
+
+//Router -------
+const authenticationRouter = require('./routes/authenticationRouter');
+
+app.use('/auth', authenticationRouter);
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
