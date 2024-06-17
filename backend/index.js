@@ -14,7 +14,9 @@ app.use(express.json());
 
 //Router -------
 const authenticationRouter = require('./routes/authenticationRouter');
+const companyRouter = require('./routes/companyRouter');
 
+app.use('/company', companyRouter);
 app.use('/auth', authenticationRouter);
 
 app.listen(port, () => {
