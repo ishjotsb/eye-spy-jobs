@@ -1,4 +1,25 @@
 const CompanyInfo = require('../model/CompanyInfo');
+const mongoose = require('mongoose');
+
+exports.getCompanyInfo = async (req, res) => {
+
+    const companyId = req.params.id;
+
+    const id = new mongoose.Types.ObjectId(companyId)
+
+    if(!companyId) {
+        return res.status(404).json({message: "Sorry the company id is invalid."});
+    }
+
+    const foundCompany = await CompanyInfo.findById({_id: id});
+
+    if(!foundCompany) {
+        return res.status(404).json({message: "We found no records."});
+    }
+
+    return res.status(200).json({message: "Information fetched successfully.", data: foundCompany});
+
+}
 
 exports.postCompanyInfo = async (req, res) => {
 
